@@ -12,7 +12,7 @@ Version: 2023-05-19
 #include "mystring.h"
 
 int main(int argc, char* args[]) {
-  char str[100] = "     This Is    a Test   ";
+  char str[100] = "     This Is    a Test ";
   if (argc > 1) {
     strcpy(str, args[1]);
   }
