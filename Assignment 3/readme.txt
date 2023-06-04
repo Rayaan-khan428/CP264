@@ -36,17 +36,17 @@ T5.3 [1/1/*] CSV file I/O
 A3
 
 Q1 My string functions
-Q1.1 [0/3/*] str_len()                               
-Q1.2 [0/3/*] str_wc()                                
-Q1.3 [0/3/*] str_lower()                             
-Q1.4 [0/3/*] str_trim()                              
+Q1.1 [3/3/*] str_len()                               
+Q1.2 [3/3/*] str_wc()                                
+Q1.3 [3/3/*] str_lower()                             
+Q1.4 [3/3/*] str_trim()                              
 
 Q2 My word processing
-Q2.1 [0/6/*] stopword_dictionary(()                  
-Q2.2 [0/4/*] is_stopword(()                          
-Q2.3 [0/8/*] process_word(()                         
+Q2.1 [6/6/*] stopword_dictionary(()                  
+Q2.2 [2/4/*] is_stopword(()                          
+Q2.3 [4/8/*] process_word(()                         
 
-Total: [0/40/*]
+Total: [36/40/*]
 
 Copy and paste the console output of your public test in the following. 
 This will help markers to evaluate your program if it fails the marking tests.  
