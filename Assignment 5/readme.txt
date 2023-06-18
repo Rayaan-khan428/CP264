@@ -1,6 +1,6 @@
 JobID: cp264oc-a5-lab5
-Name: type your name here
-ID: type your student ID here
+Name: Rayaan Khan
+ID: 210650310
 
 Statement: I claim that the enclosed submission is my individual work.
 
@@ -17,25 +17,25 @@ Grade_Item_ID [self-evaluation/total/marker-evaluation] Description
 Lab5
 
 T1 Simple/singly linked list
-T1.1 [0/2/*] Test singly linked list examples
+T1.1 [2/2/*] Test singly linked list examples
 
 T2 Linked list design
-T2.1 [0/2/*] Design and implement linked list
+T2.1 [2/2/*] Design and implement linked list
 
 T3 Doubly linked list
-T3.1 [0/3/*] Work on doubly linked list
+T3.1 [3/3/*] Work on doubly linked list
 
 T4 Circular linked list
-T4.1 [0/3/*] Work on circular linked list
+T4.1 [3/3/*] Work on circular linked list
 
 A5
 
 Q1 Record data processing by singly linked list
-Q1.1 [0/2/*] structure design                        
-Q1.2 [0/2/*] sll_insert()                            
-Q1.3 [0/2/*] sll_search()                            
-Q1.4 [0/2/*] sll_delete()                            
-Q1.5 [0/2/*] sll_clean()                             
+Q1.1 [2/2/*] structure design                        
+Q1.2 [2/2/*] sll_insert()                            
+Q1.3 [2/2/*] sll_search()                            
+Q1.4 [2/2/*] sll_delete()                            
+Q1.5 [2/2/*] sll_clean()                             
 
 Q2 Doubly linked list
 Q2.1 [0/2/*] structure design                        
