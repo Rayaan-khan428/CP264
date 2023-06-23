@@ -38,16 +38,16 @@ Q1.4 [2/2/*] sll_delete()
 Q1.5 [2/2/*] sll_clean()                             
 
 Q2 Doubly linked list
-Q2.1 [0/2/*] structure design                        
-Q2.2 [0/4/*] new_node(),dll_clean()                  
-Q2.3 [0/4/*] dll_insert_start(),dll_insert_end()     
-Q2.4 [0/4/*] dll_delete_start(),dll_delete_end()     
+Q2.1 [2/2/*] structure design                        
+Q2.2 [4/4/*] new_node(),dll_clean()                  
+Q2.3 [4/4/*] dll_insert_start(),dll_insert_end()     
+Q2.4 [4/4/*] dll_delete_start(),dll_delete_end()     
 
 Q3 Big integer type
-Q3.1 [0/2/*] BIGINT structure                        
-Q3.2 [0/2/*] add()                                   
-Q3.3 [0/2/*] Fibonacci()                             
+Q3.1 [2/2/*] BIGINT structure                        
+Q3.2 [1/2/*] add()                                   
+Q3.3 [1/2/*] Fibonacci()                             
 
-Total: [0/40/*]
+Total: [38/40/*]
 
 
