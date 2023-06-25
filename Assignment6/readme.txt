@@ -1,6 +1,6 @@
 JobID: cp264oc-a6-lab6
-Name: type your name here
-ID: type your student ID here
+Name: Rayaan Khan
+ID: 210650310
 
 Statement: I claim that the enclosed submission is my individual work.
 
@@ -17,25 +17,25 @@ Grade_Item_ID [self-evaluation/total/marker-evaluation] Description
 Lab6
 
 T1 Queues
-T1.1 [0/3/*] Read and test queue examples    
+T1.1 [3/3/*] Read and test queue examples    
 
 T2 Stacks
-T2.1 [0/3/*] Read and test stack examples    
+T2.1 [3/3/*] Read and test stack examples    
 
 T3 Application of stacks
-T3.1 [0/4/*] Read and test stack applications
+T3.1 [4/4/*] Read and test stack applications
 
 A6
 
 Q1 Queue data structure
-Q1.1 [0/3/*] enqueue()                               
-Q1.2 [0/3/*] dequeue()                               
-Q1.3 [0/2/*] queue_clean()                           
+Q1.1 [3/3/*] enqueue()                               
+Q1.2 [3/3/*] dequeue()                               
+Q1.3 [2/2/*] queue_clean()                           
 
 Q2 Stack data structure
-Q2.1 [0/3/*] push()                                  
-Q2.2 [0/3/*] pop()                                   
-Q2.3 [0/2/*] stack_clean()                           
+Q2.1 [3/3/*] push()                                  
+Q2.2 [3/3/*] pop()                                   
+Q2.3 [2/2/*] stack_clean()                           
 
 Q3 Postfix and infix expression evaluation
 Q3.1 [0/6/*] infix_to_postfix()                      
