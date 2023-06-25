@@ -33,80 +33,58 @@ int type(char c) {
     return 4;
 }
 
-QUEUE infix_to_postfix(char *infixstr) {
-  STACK stack;
-  QUEUE postfix_queue;
-  stack_init(&stack);
-  queue_init(&postfix_queue);
 
-  int i = 0;
-  while (infixstr[i] != '\0') {
-    char c = infixstr[i];
-    int t = type(c);
-
-    if (t == 0) {
-      // Operand (digit)
-      enqueue(&postfix_queue, c);
-    } else if (t == 1) {
-      // Operator
-      while (!stack_empty(&stack) && get_priority(top(&stack)) >= get_priority(c)) {
-        enqueue(&postfix_queue, pop(&stack));
-      }
-      push(&stack, c);
-    } else if (t == 2) {
-      // Opening parenthesis
-      push(&stack, c);
-    } else if (t == 3) {
-      // Closing parenthesis
-      while (!stack_empty(&stack) && top(&stack) != '(') {
-        enqueue(&postfix_queue, pop(&stack));
-      }
-      if (top(&stack) == '(') {
-        pop(&stack);
-      } else {
-        // Mismatched parentheses error
-        fprintf(stderr, "Error: Mismatched parentheses\n");
-        exit(1);
-      }
-    }
-
-    i++;
-  }
-
-  while (!stack_empty(&stack)) {
-    char top_operator = pop(&stack);
-    if (top_operator == '(') {
-      // Mismatched parentheses error
-      fprintf(stderr, "Error: Mismatched parentheses\n");
-      exit(1);
-    }
-    enqueue(&postfix_queue, top_operator);
-  }
-
-  return postfix_queue;
-}
 
 /* 
  * convert infix expression in string to postfix expression represented by QUEUE and return the postfix expression queue. 
 */
-// QUEUE infix_to_postfix(char *infixstr) {
+QUEUE infix_to_postfix(char *infixstr) {
 
-//     char *p = infixstr;
+    char *p = infixstr;
 
-//     STACK stack = {0}; // Stack for infix expression
-//     QUEUE queue = {0}; // Queue for postfix expression
+    STACK stack = {0}; // Stack for infix expression
+    QUEUE queue = {0}; // Queue for postfix expression
 
-//     int sign = 1, num = 0;
+    int sign = 1, num = 0;
 
-//     while (*p) {
-//         // step 1: check if the character we are looking at is a negative
-//         if (*p == '-' && (p==infixstr || *(p-1) == '(')) {
-//             sign = -1;
-//         }
+    while (*p) {
+        // step 1: check if the character we are looking at is a negative
+        if (*p == '-' && (p == infixstr || *(p - 1) == '(')) {
+            sign = -1;
+        }
 
-//         // step 2: check if it is an operant
-//     }
-// }
+        // step 2: check if it is an operand
+        else if (*p >= '0' && *p <= '9') {
+            num = *p - '0';
+            while (*(p + 1) >= '0' && *(p + 1) <= '9') {
+                num = num * 10 + (*(p + 1) - '0');
+                p++;
+            }
+            enqueue(&queue, new_node(sign * num, 0));
+            sign = 1;
+        } else if (*p == '(') {
+            push(&stack, *p);
+        } else if (*p == ')') {
+            while (stack.top && stack.top[stack.top - 1] != '(') {
+                enqueue(&queue, new_node(pop(&stack), 0));
+            }
+            if (stack.top && stack.top[stack.top - 1] == '(') {
+                pop(&stack); // Discard the opening parenthesis
+            }
+        } else if (type(*p) == 1) { // in the case it is an operator
+            while (stack.top && type(stack.top[stack.top - 1]) == 1 && precedence(*p) <= precedence(stack.data[stack.top - 1])) {
+                enqueue(&queue, new_node(pop(&stack), 0));
+            }
+            push(&stack, *p);
+        }
+        p++;
+    }
+    while (stack.top) {
+        enqueue(&queue, new_node(pop(&stack), 0));
+    }
+    return queue;
+}
+
 
 /* 
  * evaluate and returns the value postfix expression passed by queue.
@@ -177,7 +155,7 @@ int evaluate_postfix(QUEUE queue) {
  * using infix_to_postfix() and evaluate_postfix() functions.
 */
 int evaluate_infix(char *infixstr) {
-    // your implementation
-    return 1;
-
+    QUEUE postfixQueue = infix_to_postfix(infixstr);
+    int result = evaluate_postfix(postfixQueue);
+    return result;
 }

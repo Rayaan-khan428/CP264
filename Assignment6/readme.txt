@@ -38,10 +38,10 @@ Q2.2 [3/3/*] pop()
 Q2.3 [2/2/*] stack_clean()                           
 
 Q3 Postfix and infix expression evaluation
-Q3.1 [0/6/*] infix_to_postfix()                      
-Q3.2 [0/5/*] evaluate_postfix()                      
-Q3.3 [0/3/*] evaluate_infix()                        
+Q3.1 [3/6/*] infix_to_postfix()                      
+Q3.2 [5/5/*] evaluate_postfix()                      
+Q3.3 [3/3/*] evaluate_infix()                        
 
-Total: [0/40/*]
+Total: [37/40/*]
 
 
