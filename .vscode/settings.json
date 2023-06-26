@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "common.h": "c",
+        "stdlib.h": "c",
+        "array": "c",
+        "vector": "c"
+    }
+}
