@@ -16,7 +16,7 @@ int height(TNODE *np)
 {
     // your implementation
     if (np) {
-        np->height;
+        return np->height;
     }
     else {
         return 0;
@@ -26,7 +26,7 @@ int height(TNODE *np)
 int balance_factor(TNODE* np) {
     // your implementation
     if (np) {
-        return height(np->height) - height(np->left);
+        return height(np->left) - height(np->right);
     } else {
         return 0;
     }
@@ -49,15 +49,15 @@ int is_avl(TNODE *root) {
 TNODE *rotate_right(TNODE *y)
 {
     // your implementation
-    // 1st: assign pointers 
-    TNODE *rotatingNode = y->right;
-    TNODE *valueNode = rotatingNode->left;
+    // 1st: assign pointers
+    TNODE *rotatingNode = y->left;
+    TNODE *valueNode = rotatingNode->right;
 
-    // 2nd: move nodes
-    rotatingNode->left = y;
-    y->right = valueNode; 
+    //2nd: move nodes
+    rotatingNode->right = y;
+    y->left = valueNode;
 
-    // 3rd: update height
+    // 3rd: update heights
     rotatingNode->height = 1 + max(height(rotatingNode->left), height(rotatingNode->right));
     y->height = 1 + max(height(y->left), height(y->right));
     return rotatingNode;
@@ -66,15 +66,15 @@ TNODE *rotate_right(TNODE *y)
 TNODE *rotate_left(TNODE *x)
 {
     // your implementation
-    // 1st: assign pointers
-    TNODE *rotatingNode = x->left;
-    TNODE *valueNode = rotatingNode->right;
+    // 1st: assign pointers 
+    TNODE *rotatingNode = x->right;
+    TNODE *valueNode = rotatingNode->left;
 
-    //2nd: move nodes
-    rotatingNode->right = x;
-    x->left = valueNode;
+    // 2nd: move nodes
+    rotatingNode->left = x;
+    x->right = valueNode; 
 
-    // 3rd: update heights
+    // 3rd: update height
     rotatingNode->height = 1 + max(height(rotatingNode->left), height(rotatingNode->right));
     x->height = 1 + max(height(x->left), height(x->right));
     return rotatingNode;
@@ -82,65 +82,69 @@ TNODE *rotate_left(TNODE *x)
 }
 
 // double pointer, we are given a pointer that is pointing to the memory location of the address of root p
-void insert(TNODE **rootp, char *name, float score)
-{
+void insert(TNODE **rootp, char *name, float score) {
 
-    TNODE *np = (TNODE *) malloc(sizeof(TNODE));
-    if (np == NULL) return;
-    strcpy(np->data.name, name);
-    np->data.score = score;
-    np->height = 1;
-    np->left = NULL;
-    np->right = NULL;
-    
-    // 1. Perform the normal BST insertion
-    if (*rootp == NULL) {
-        *rootp = np;
+    // 1: create a node
+    TNODE *node = (TNODE*) malloc(sizeof(TNODE));
+    if (node == NULL){
+        return;
+    }     
+    strcpy(node->data.name, name);
+    node->data.score = score;
+    node->height = 1;
+    node->left = NULL;
+    node->right = NULL;
+
+    // 2: insert node into AVL
+    // Edge Case: first node being inserted into avl
+    if (*rootp == NULL){
+        *rootp = node;
         return;
     }
     
+    // Insert the nth node
     TNODE *root = *rootp;
-    if (strcmp(name, root->data.name) < 0 )
-        insert(&root->left, name, score);
-    else if (strcmp(name, root->data.name) > 0 )
-        insert(&root->right, name, score);
-    else return;
-
-    // 2. update height of this root node
-    root->height += 1;
+    int cmp = strcmp(name, root->data.name);
     
-    // 3. Get the balance factor of this ancestor node to check whether this node became unbalanced
+    // if end has been reached
+    if (cmp == 0){
+        return;
+    }
+    // if node is < 1 key
+    else if (cmp < 0){
+        insert(&root->left, name, score);
+    }
+    // if the node is > than key
+    else if (cmp > 0){
+        insert(&root->right, name, score);
+    }
+    
+    // third: update heights
+    root->height = ( 1 + max(height(root->left), height(root->right)));
     int bf = balance_factor(root);
 
-    // 4. re-balance if not balanced
-    if (bf >= 2) {
-
-        // case 1: right rotation
-        if (balance_factor(root->left) >= 0) {
+    // Case 1: right rotation
+    if (bf >= 2){
+        if (balance_factor(root->left) >= 0){
             *rootp = rotate_right(root);
-        } 
-
-        // case 2: left-right rotation
-        else {
-            root->left = rotate_left(root->left);
-            *rootp = rotate_right(root);       
         }
-
-    }
-
-    else if (bf <= -2) {
-
-        // case 3: left-rotation
-        if (balance_factor(root->right) <= 0) {
-            *rootp = rotate_left(root);
-        }
-
-        // case 4: 
+        // Case 2: left-right rotation
         else{
             root->left = rotate_left(root->left);
             *rootp = rotate_right(root);
         }
-
+    }
+    
+    // Case 3: left rotation
+    else if (bf <= -2){
+        if (balance_factor(root->right) <= 0){
+            *rootp = rotate_left(root);
+        }
+        else{
+        // Case 4: right-left rotatation 
+        root->right = rotate_right(root->right);
+        *rootp = rotate_left(root);
+        }
     }
 
 }
