@@ -3,6 +3,9 @@
         "common.h": "c",
         "stdlib.h": "c",
         "array": "c",
-        "vector": "c"
+        "vector": "c",
+        "stdio.h": "c",
+        "myrecord_bst.h": "c",
+        "string.h": "c"
     }
 }
