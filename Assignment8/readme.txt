@@ -1,6 +1,6 @@
 JobID: cp264oc-a8-lab8
-Name: type your name here
-ID: type your student ID here
+Name: Rayaan Khan
+ID: 210650310
 
 Statement: I claim that the enclosed submission is my individual work.
 
