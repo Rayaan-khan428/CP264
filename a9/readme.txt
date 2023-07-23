@@ -34,11 +34,11 @@ Q2 Symbolic expression evaluation
 Q2.1 [3/6/*] infix_to_postfix_symbol()               
 
 Q3 Binary heap
-Q3.1 [0/3/*] new_heap(),find_index_data()            
-Q3.2 [0/3/*] insert()                                
-Q3.3 [0/3/*] extract_min()                           
-Q3.4 [0/3/*] change_key()                            
+Q3.1 [3/3/*] new_heap(),find_index_data()            
+Q3.2 [3/3/*] insert()                                
+Q3.3 [3/3/*] extract_min()                           
+Q3.4 [3/3/*] change_key()                            
 
-Total: [0/40/*]
+Total: [37/40/*]
 
 
