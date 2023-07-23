@@ -3,59 +3,41 @@
 #include <string.h> 
 #include "heap.h"
 
-HEAP *new_heap(int capacity)
-{
-// your implementation
-    HEAP *heap = (HEAP *)malloc(sizeof(HEAP));
-    if (heap == NULL) {
-        exit(EXIT_FAILURE);
-    }
+HEAP *new_heap(int capacity){
 
-    // Set the capacity to at least MIN_CAPACITY
-    heap->capacity = (capacity < MIN_CAPACITY) ? MIN_CAPACITY : capacity;
-    heap->size = 0;
+    //1st: create the heap in memory
+    HEAP *newHeap = (HEAP *) (malloc(sizeof(HEAP)));
 
-    // Allocate memory for the heap node array
-    heap->hna = (HNODE *)malloc(heap->capacity * sizeof(HNODE));
-    if (heap->hna == NULL) {
-        free(heap);
-        exit(EXIT_FAILURE);
-    }
+    newHeap->size = 0;
+    newHeap->capacity = capacity;
+    newHeap->hna = (HNODE*) malloc(sizeof(HNODE) * capacity);
 
-    return heap;
+    return newHeap;
 }
 
 void insert(HEAP *heap, HNODE new_node)
 {
     // your implementation
-    // Check if the heap is full and resize if needed
-    if (heap->size == heap->capacity) {
-        heap->capacity *= 2; // Double the capacity
-        heap->hna = (HNODE *)realloc(heap->hna, heap->capacity * sizeof(HNODE));
-        if (heap->hna == NULL) {
-            exit(EXIT_FAILURE);
+    // first step, check if the capacity is full; then reallocate space accordingly
+    if (heap->size == heap->capacity){
+
+        heap->capacity *= 2; 
+            
+        HNODE *temp = (HNODE *) malloc(sizeof(HNODE) * heap->capacity);
+        if (temp){
+            memcpy(temp, heap->hna, sizeof(HNODE) * heap->size);
+            free(heap->hna);
+            heap->hna = temp;
+        } else{
+            printf("resize failed\n");
         }
     }
 
-    // Add the new node to the end of the heap
-    int currentIndex = heap->size;
-    heap->hna[currentIndex] = new_node;
+    // second step, we will now insert into the heap
+    heap->hna[heap->size] = new_node;
+    heapify_up(heap);
     heap->size++;
-
-    while (currentIndex > 0) {
-        int parentIndex = (currentIndex - 1) / 2;
-        if (cmp(heap->hna[parentIndex].key, heap->hna[currentIndex].key) <= 0) {
-            break;
-        }
-
-        // Swap the parent and current nodes
-        HNODE temp = heap->hna[parentIndex];
-        heap->hna[parentIndex] = heap->hna[currentIndex];
-        heap->hna[currentIndex] = temp;
-
-        // Move up to the parent level
-        currentIndex = parentIndex;
-    }
+    return;
 }
 
 HNODE extract_min(HEAP *heap) {
@@ -101,60 +83,27 @@ HNODE extract_min(HEAP *heap) {
     return min_node;
 }
 
-
 int change_key(HEAP *heap, int index, KEYTYPE new_key) {
+    
     if (index < 0 || index >= heap->size) {
-        exit(EXIT_FAILURE);
+        return 0;  // Return 0 to indicate failure
     }
 
-    if (cmp(new_key, heap->hna[index].key) < 0) {
-        // If the new key is smaller, move the node up (percolate-up)
-        heap->hna[index].key = new_key;
-        while (index > 0) {
-            int parentIndex = (index - 1) / 2;
-            if (cmp(heap->hna[parentIndex].key, heap->hna[index].key) <= 0) {
-                break;
-            }
+    heap->hna[index].key = new_key;
 
-            HNODE temp = heap->hna[parentIndex];
-            heap->hna[parentIndex] = heap->hna[index];
-            heap->hna[index] = temp;
-
-            // Move up to the parent level
-            index = parentIndex;
-        }
-    } else if (cmp(new_key, heap->hna[index].key) > 0) {
-        heap->hna[index].key = new_key;
-        while (1) {
-            int leftChild = 2 * index + 1;
-            int rightChild = 2 * index + 2;
-            int smallest = index;
-
-            // Find the index of the smallest child node
-            if (leftChild < heap->size && cmp(heap->hna[leftChild].key, heap->hna[smallest].key) < 0) {
-                smallest = leftChild;
-            }
-            if (rightChild < heap->size && cmp(heap->hna[rightChild].key, heap->hna[smallest].key) < 0) {
-                smallest = rightChild;
-            }
-
-            // If the node is the smallest, heap property is maintained
-            if (smallest == index) {
-                break;
-            }
-
-            // Swap the node with the smallest child
-            HNODE temp = heap->hna[index];
-            heap->hna[index] = heap->hna[smallest];
-            heap->hna[smallest] = temp;
-
-            // Move down to the smallest child level
-            index = smallest;
-        }
+    if (index > 0 && heap->hna[index].key < heap->hna[(index-1)/2].key) {
+        heapify_up(heap);
+    } else {
+        heapify_down(heap, index);
     }
+
+    return 1;  // Return 1 to indicate success
 }
 
-
+/**
+ * Helper functions below:
+ *
+*/
 int find_data_index(HEAP *heap, DATA data) {
     for (int i = 0; i < heap->size; i++) {
         if (heap->hna[i].data == data) {
@@ -174,3 +123,38 @@ int cmp(KEYTYPE a, KEYTYPE b) {
         return 0; 
     }
 }
+
+void swap(HNODE *a, HNODE *b) {
+    HNODE tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
+HNODE extract_min(HEAP *heap) {
+    HNODE min_node = heap->hna[0];
+    heap->hna[0] = heap->hna[heap->size - 1];
+    heap->size--;
+    heapify_down(heap, 0);
+    return min_node;
+}
+
+void heap_sort(HNODE *hna, int n) {
+    HEAP heap;
+    heap.capacity = n;
+    heap.size = n;
+    heap.hna = hna;
+    
+    for (int j = (n-2)/2; j >= 0; j--) {
+        heapify_down(&heap, j);
+    }
+    
+    // Extract elements in min-heap order
+    for (int i = n-1; i > 0; i--) {
+        HNODE temp = hna[0];
+        hna[0] = hna[i];
+        hna[i] = temp;
+        heap.size--;
+        heapify_down(&heap, 0);
+    }
+}
+
