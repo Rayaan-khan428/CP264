@@ -17,39 +17,16 @@ int get_priority(char op) {
     return -1;    
 }
 
-
 QUEUE infix_to_postfix_symbol(char *infixstr,  HASHTABLE *ht) {
     // your implementation
+    QUEUE queue = {0};
+    STACK stack = {0};
+    char *p = infixstr;
+    int sign = 1;
+    int num = 0;
+    char symbol[20] = {0};
+    return queue;
 
-
-}
-
-/*
- * your program signature
- */ 
- 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "common_queue_stack.h"
-#include "expression_symbol.h"
-
-int get_priority(char op) {
-  if (op == '/' || op == '*' || op == '%') 
-    return 1;
-  else if (op == '+' || op == '-')
-    return 0;
-  else 
-    return -1;    
-}
-
-
-QUEUE infix_to_postfix_symbol(char *infixstr,  HASHTABLE *ht) {
-// your implementation
-}
-
-int evaluate_infix_symbol(char *infixstr,  HASHTABLE *ht) {
-// your implementation
 }
 
 int evaluate_infix_symbol(char *infixstr, HASHTABLE *ht) {
@@ -164,8 +141,6 @@ int evaluate_infix_symbol(char *infixstr, HASHTABLE *ht) {
 
     return result;
 }
-
-
 
 int evaluate_postfix(QUEUE queue) {
     // your implementation, same as A6Q3

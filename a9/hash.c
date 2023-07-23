@@ -18,13 +18,11 @@ int hash(char* word) {
 }
 
 HSNODE *new_hashnode(char *key, int value) {
+    
     // your implementation
     HSNODE *new_node = (HSNODE *)malloc(sizeof(HSNODE));
-    // if (new_node == NULL) {
-    //     return NULL;
-    // }
 
-    strncpy(new_node->key, key, 10); // Copy at most 10 characters of the key to the new node
+    strcpy(new_node->key, key); 
     new_node->value = value;
     new_node->next = NULL;
 
@@ -32,18 +30,17 @@ HSNODE *new_hashnode(char *key, int value) {
 }
 
 HASHTABLE *new_hashtable(int size) {
+    
+    // in memory create hashtable
     HASHTABLE *ht = (HASHTABLE *)malloc(sizeof(HASHTABLE));
     if (ht == NULL) {
         return NULL;
     }
 
+    // arrya oif hashnodes in the memmory
     ht->hna = (HSNODE **)malloc(size * sizeof(HSNODE *));
-    if (ht->hna == NULL) {
-        free(ht);
-        return NULL;
-    }
 
-    // Initialize all hash table nodes to NULL
+    // initialize all hash table nodes to NULL
     for (int i = 0; i < size; i++) {
         ht->hna[i] = NULL;
     }
@@ -72,26 +69,45 @@ HSNODE *search(HASHTABLE *ht, char *key) {
 
 
 int insert(HASHTABLE *ht, HSNODE *np) {
-    if (ht == NULL || np == NULL) {
-        return 0; // Invalid input parameters
+    
+    // 1st: find the hash value (index) of our HashNode key (name)
+    int i = hash(strdup(np->key));
+
+    // 2nd: find the index of where we want to insert
+    HSNODE *p = ht->hna[i];
+    HSNODE *pp = NULL; // our previous pointer
+
+    // General Case: found the index and it is empty
+    if (p == NULL){
+        ht->hna[i] = np; // set new node as the leading node
     }
 
-    int index = hash(np->key); // Calculate the hash value of the key to get the index
+    // Special Case: found the index and there is a linked list
+    else{
+        while (p && strcmp(np->key, p->key) > 0){
+            pp = p;
+            p = p->next;
+        }
 
-    // Check if the key already exists in the hash table
-    HSNODE *existing_node = search(ht, np->key);
-    if (existing_node != NULL) {
-        // Key already exists, update the value
-        existing_node->value = np->value;
-        return 1; // Successfully updated the value
+        // Case 1: the node already exists in the list
+        if (p && strcmp(np->key, p->key) == 0){
+            p->value = np->value;
+            free(np);
+            return 0;
+        }
+        // Case 2: inserting the node into the 1st position of the list
+        if (pp == NULL){
+            ht->hna[i] = np; // important
+        }
+        // Case 3: inserting the node into the nth position of the list; where n > 1
+        else{
+            pp->next = np;
+            np->next = p;
+        }
     }
-
-    // Key does not exist, insert a new node at the beginning of the linked list
-    np->next = ht->hna[index];
-    ht->hna[index] = np;
     ht->count++;
 
-    return 1; // Successfully inserted the new node
+    return 1;
 }
 
 int delete(HASHTABLE *ht, char *key) {
