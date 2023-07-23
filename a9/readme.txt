@@ -1,6 +1,6 @@
 JobID: cp264oc-a9-lab9
-Name: type your name here
-ID: type your student ID here
+Name: Rayaan Khan
+ID: 210650310
 
 Statement: I claim that the enclosed submission is my individual work.
 
@@ -17,21 +17,21 @@ Grade_Item_ID [self-evaluation/total/marker-evaluation] Description
 Lab9
 
 T1 Hash tables
-T1.1 [0/5/*] Read and test hash tables
+T1.1 [5/5/*] Read and test hash tables
 
 T2 Heaps
-T2.1 [0/5/*] Read and test Heaps
+T2.1 [5/5/*] Read and test Heaps
 
 A9
 
 Q1 Chained hash table
-Q1.1 [0/3/*] new_node(), new_hashtable()             
-Q1.2 [0/3/*] search()                                
-Q1.3 [0/3/*] insert()                                
-Q1.4 [0/3/*] delete()                                
+Q1.1 [3/3/*] new_node(), new_hashtable()             
+Q1.2 [3/3/*] search()                                
+Q1.3 [3/3/*] insert()                                
+Q1.4 [3/3/*] delete()                                
 
 Q2 Symbolic expression evaluation
-Q2.1 [0/6/*] infix_to_postfix_symbol()               
+Q2.1 [3/6/*] infix_to_postfix_symbol()               
 
 Q3 Binary heap
 Q3.1 [0/3/*] new_heap(),find_index_data()            
