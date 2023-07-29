@@ -7,6 +7,7 @@
         "stdio.h": "c",
         "myrecord_bst.h": "c",
         "string.h": "c",
-        "math.h": "c"
+        "math.h": "c",
+        "__node_handle": "c"
     }
 }
