@@ -1,5 +1,5 @@
 /*
- * your program signature
+ * Name: Rayaan
  */ 
  
 #ifndef GRAPH_H
@@ -27,15 +27,10 @@ typedef struct graph {
 GRAPH *new_graph(int n);
 
 void add_edge(GRAPH *g, int from, int to, int weight);
-
 int get_weight(GRAPH *g, int from, int to);
-
 void display_graph(GRAPH *g);
-
 void clean_graph(GRAPH **gp);
-
 void display_bforder(GRAPH *g, int start);
-
 void display_dforder(GRAPH *g, int start); 
 
 #endif
